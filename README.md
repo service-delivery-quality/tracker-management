@@ -29,7 +29,10 @@ cd samples/opentraveldata/db
 ```
 
 ### Python Environment
-Inspired by http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
+Inspired by:
+* http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
+* http://cherrypy.readthedocs.org/en/3.3.0/tutorial/REST.html
+Create a Python virtual environment, and install a few needed Python libraries within it:
 ```bash
 cd samples/opentraveldata/python-db
 virtualenv venv
@@ -62,3 +65,14 @@ curl -i -X GET http://localhost:5000/notification_events
 [{"check_frequency": 1440, "thshd_lower": 0.70, "notification_list": "john@doe.me", "thshd_upper": 1.20, "content": "{\"notified_address_list\": \"john@doe.me\"}", "timestamp": "2016-02-01T08:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airline_por.csv\""}, {"check_frequency": 1440, "thshd_lower": 0.70, "notification_list": "john@doe.me", "thshd_upper": 1.20, "content": "{\"notified_address_list\": \"john@doe.me\"}", "timestamp": "2016-02-01T09:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airlines.csv\""}, {"check_frequency": 1440, "thshd_lower": 0.70, "notification_list": "john@doe.me", "thshd_upper": 1.20, "content": "{\"notified_address_list\": \"john@doe.me\"}", "timestamp": "2016-02-05T20:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airlines.csv\""}]
 ```
 
+### WS API - Update
+The following script allows to update a notification event in the database:
+```bash
+curl -i -H "Content-Type: application/json" -X PUT -d '{"timestamp": "2016-02-05 20:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airline_por.csv\"", "content": "{\"notified_address_list\": \"john@doe.me\"}"}' 'http://localhost:5000/notification_events/2016-02-05 20:00:00'
+```
+
+### WS API - Delete
+The following script allows to delete a notification event in the database:
+```bash
+curl -i -X DELETE 'http://localhost:5000/notification_events/2016-02-05 20:00:00'
+```
