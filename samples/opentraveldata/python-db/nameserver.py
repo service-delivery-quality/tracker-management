@@ -64,7 +64,8 @@ def notification_events():
 @app.route("/add", methods=['POST'])
 def add():
   req_json = flask.request.get_json()
-  flask.g.cursor.execute("INSERT INTO sdq_sdq.notification_events (timestamp, tag_list, content) VALUES (%s, %s, %s)", (req_json['timestamp'], req_json['tag_list'], req_json['content']))
+  flask.g.cursor.execute ("INSERT INTO sdq_sdq.notification_events (timestamp, tag_list, content) VALUES (%s, %s, %s)",
+                          (req_json['timestamp'], req_json['tag_list'], req_json['content']))
   flask.g.conn.commit()
   resp = flask.Response("Updated", status=201, mimetype='application/json')
   return resp
