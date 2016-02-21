@@ -55,19 +55,29 @@ def hello():
   return "Hello World!"
 
 @app.route("/notification_events", methods=['GET'])
-def notification_events():
+def get():
   result = query_db("SELECT ne.timestamp, ne.tag_list, tck.check_frequency, tck.thshd_lower, tck.thshd_upper, tck.notification_list, ne.content FROM sdq_sdq.trackers as tck, sdq_sdq.notification_events as ne where ne.tag_list = tck.tag_list")
   data = json.dumps (result, default=json_serial)
   resp = flask.Response(data, status=200, mimetype='application/json')
   return resp
 
-@app.route("/add", methods=['POST'])
-def add():
+@app.route("/notification_events/", methods=['POST'])
+def post():
   req_json = flask.request.get_json()
   flask.g.cursor.execute ("INSERT INTO sdq_sdq.notification_events (timestamp, tag_list, content) VALUES (%s, %s, %s)",
                           (req_json['timestamp'], req_json['tag_list'], req_json['content']))
   flask.g.conn.commit()
-  resp = flask.Response("Updated", status=201, mimetype='application/json')
+  resp = flask.Response ("Record added", status=201, mimetype='application/json')
+  return resp
+
+# Does not work yet
+@app.route("/notification_events/", methods=['DELETE'])
+def delete():
+  req_json = flask.request.get_json()
+  flask.g.cursor.execute ("DELETE FROM sdq_sdq.notification_events WHERE timestamp = %s",
+                          (req_json['timestamp']))
+  flask.g.conn.commit()
+  resp = flask.Response ("Record deleted", status=201, mimetype='application/json')
   return resp
 
 # Main

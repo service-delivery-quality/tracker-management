@@ -57,7 +57,7 @@ curl -i -X GET http://localhost:5000/notification_events
 ### WS API - Add
 The following script allows to add a notification event in the database:
 ```bash
-curl -i -H "Content-Type: application/json" -X POST -d '{"timestamp": "2016-02-05 20:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airlines.csv\"", "content": "{\"notified_address_list\": \"john@doe.me\"}"}' http://localhost:5000/add
+curl -i -H "Content-Type: application/json" -X POST -d '{"timestamp": "2016-02-05 20:00:00", "tag_list": "\"file\", \"opentraveldata\", \"optd_airlines.csv\"", "content": "{\"notified_address_list\": \"john@doe.me\"}"}' http://localhost:5000/notification_events/
 ```
 Check that the item has been inserted:
 ```bash
@@ -76,3 +76,4 @@ The following script allows to delete a notification event in the database:
 ```bash
 curl -i -X DELETE 'http://localhost:5000/notification_events/2016-02-05 20:00:00'
 ```
+
