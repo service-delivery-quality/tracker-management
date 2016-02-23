@@ -7,8 +7,11 @@ import decimal
 import simplejson as json
 import MySQLdb
 from datetime import datetime
+#enabling of cors
+from flask.ext.cors import CORS
 
 app = flask.Flask (__name__)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 #
 
@@ -83,4 +86,3 @@ def delete():
 # Main
 if __name__ == "__main__":
   app.run(debug=True)
-

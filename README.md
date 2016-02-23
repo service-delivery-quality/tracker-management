@@ -11,7 +11,7 @@ The sample project is OpenTravelData (OPTD): http://github.com/opentraveldata/op
 If the ```sdq``` database user does not exist, the following script creates it:
 ```bash
 cd samples/opentraveldata/db
-./create_sdq_db_user.sh
+./create_sdq_user.sh
 ```
 Normally, that script just needs to run once and for all.
 
@@ -29,6 +29,9 @@ cd samples/opentraveldata/db
 ```
 
 ### Python Environment
+
+Before starting, please ensure you have installed the mysql client, server and dev tools (libmysqlclient-dev)
+
 Inspired by:
 * http://www.roblayton.com/2015/04/creating-python-flask-crud-api-with.html
 * http://cherrypy.readthedocs.org/en/3.3.0/tutorial/REST.html
@@ -37,14 +40,21 @@ Create a Python virtual environment, and install a few needed Python libraries w
 cd samples/opentraveldata/python-db
 virtualenv venv
 source venv/bin/activate
-pip install mysql-python flask simplejson
+pip install mysql flask simplejson flask-cors cherrypy
 ```
 
 ### Flask Server
 Start the Flask server in the background:
 ```bash
-cd samples/opentraveldata/python-db
+cd samples/opentraveldata/python-db/flask/
 python nameserver.py &
+```
+
+### Cherrypy Server
+Start the Flask server in the background:
+```bash
+cd samples/opentraveldata/python-db/cherrypy/
+python tracker_manager.py &
 ```
 
 ### WS API - Read
@@ -76,4 +86,3 @@ The following script allows to delete a notification event in the database:
 ```bash
 curl -i -X DELETE 'http://localhost:5000/notification_events/2016-02-05 20:00:00'
 ```
-

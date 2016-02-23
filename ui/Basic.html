@@ -1,0 +1,41 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+  <title>Basic HTML</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <button id="go" class="btn">Go!!!</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="https://rawgit.com/travel-intelligence/TIjs/master/TI.js"></script>
+  <script>
+    $(document).ready(function() {
+
+      //We configure TIjs
+      TI.configure("http://localhost:5000/")
+
+      $("#go").click(function() {
+        TI.callWS("notification_events", {}, function(msg) {
+          alert(JSON.stringify(msg));
+        });
+
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

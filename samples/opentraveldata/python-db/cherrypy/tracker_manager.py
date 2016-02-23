@@ -30,12 +30,14 @@ def addNotificationEvent (row):
     tag_list = row[1]
     content = row[6]
 
+    print row
+
     #
     if not tag_list in notification_list:
         notification_list[tag_list] = dict()
 
     #
-    notification_list[tag_list][timestamp] = content
+    notification_list[tag_list][json_serial(timestamp)] = content
     return (tag_list, timestamp, content)
 
 #
@@ -58,10 +60,13 @@ class NotificationEvents:
                 (tag_list, timestamp, content) = addNotificationEvent (row)
                 # print ("tl: %s; ts: %s; ct: %s" % (tag_list, timestamp, content))
 
-            #data = json.dumps (notification_list, default=json_serial)
+
+            data = json.dumps (notification_list, default=json_serial)
             db.close()
-            return ("The whole list: " + str(notification_list))
-        
+            print data
+            #return ("The whole list: " + str(notification_list))
+            return data
+
         else:
             #
             query_get_evt = query_get_nl + " and ne.tag_list = '" + tag_list + "'"
